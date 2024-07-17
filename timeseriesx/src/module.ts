@@ -19,36 +19,6 @@ export const plugin = new PanelPlugin<SimpleOptions>(SimplePanel)
         },
       },
     },
-    useCustomConfig: (builder) => {
-      builder
-        .addRadio({
-          path: 'sensitivityMode',
-          name: 'Sensitivity',
-          defaultValue: SensitivityMode.Low,
-          settings: {
-            options: [
-              {
-                label: 'Low',
-                value: SensitivityMode.Low,
-                description: 'Enable low sensitivity',
-                ariaLabel: "Low sensitivity",
-              },
-              {
-                label: 'Medium',
-                value: SensitivityMode.Medium,
-                description: 'Enable medium sensitivity',
-                ariaLabel: "Medium sensitivity",
-              },
-              {
-                label: 'High',
-                value: SensitivityMode.High,
-                description: 'Enable high sensitivity',
-                ariaLabel: "High sensitivity",
-              },
-            ],
-          },
-        });
-    },
   })
   .setPanelOptions((builder) => {
     return builder
@@ -56,6 +26,33 @@ export const plugin = new PanelPlugin<SimpleOptions>(SimplePanel)
         path: 'anomalyDetection',
         name: 'Anomaly Detection',
         defaultValue: false,
+      })
+      .addRadio({
+        path: 'sensitivityMode',
+        name: 'Sensitivity',
+        defaultValue: SensitivityMode.Low,
+        settings: {
+          options: [
+            {
+              label: 'Low',
+              value: SensitivityMode.Low,
+              description: 'Enable low sensitivity',
+              ariaLabel: "Low sensitivity",
+            },
+            {
+              label: 'Medium',
+              value: SensitivityMode.Medium,
+              description: 'Enable medium sensitivity',
+              ariaLabel: "Medium sensitivity",
+            },
+            {
+              label: 'High',
+              value: SensitivityMode.High,
+              description: 'Enable high sensitivity',
+              ariaLabel: "High sensitivity",
+            },
+          ],
+        },
       })
       .addRadio({
         path: 'legend.displayMode',
