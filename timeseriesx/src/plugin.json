@@ -1,0 +1,37 @@
+{
+  "$schema": "https://raw.githubusercontent.com/grafana/grafana/main/docs/sources/developers/plugins/plugin.schema.json",
+  "type": "panel",
+  "name": "timeseriesx",
+  "id": "timeseriesx",
+  "info": {
+    "keywords": [
+      "panel",
+      "example"
+    ],
+    "description": "Showcase how to build a timeseriesx plugin",
+    "author": {
+      "name": "Your Name"
+    },
+    "logos": {
+      "small": "img/logo.svg",
+      "large": "img/logo.svg"
+    },
+    "links": [
+      {
+        "name": "Website",
+        "url": "https://github.com/grafana/grafana-plugin-examples/examples/timeseriesx"
+      },
+      {
+        "name": "License",
+        "url": "https://github.com/grafana/grafana-plugin-examples/examples/timeseriesx/blob/master/LICENSE"
+      }
+    ],
+    "screenshots": [],
+    "version": "%VERSION%",
+    "updated": "%TODAY%"
+  },
+  "dependencies": {
+    "grafanaDependency": ">=10.3.3",
+    "plugins": []
+  }
+}
