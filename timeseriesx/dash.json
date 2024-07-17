@@ -40,7 +40,7 @@
             },
             "custom": {
               "fillOpacity": 1,
-              "gradientMode": "scheme"
+              "sensitivityMode": 2
             },
             "mappings": [],
             "thresholds": {
@@ -73,8 +73,8 @@
             "placement": "bottom",
             "showLegend": true
           },
-          "seriesCountSize": "sm",
-          "showSeriesCount": false,
+          "sensitivityMode": "Low",
+          "anomalyDetection": false,
           "text": "Default value of text input option"
         },
         "targets": [

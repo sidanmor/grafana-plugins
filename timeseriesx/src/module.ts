@@ -1,8 +1,14 @@
 import { PanelPlugin, FieldColorModeId } from '@grafana/data';
-import { LegendDisplayMode, GraphGradientMode } from '@grafana/schema';
+import { LegendDisplayMode } from '@grafana/schema';
 import { SimpleOptions } from './types';
 import { SimplePanel } from './components';
 import { ariaLabels } from './components/ariaLabels';
+
+enum SensitivityMode {
+  Low = 0,
+  Medium = 1,
+  High = 2
+}
 
 export const plugin = new PanelPlugin<SimpleOptions>(SimplePanel)
   .useFieldConfig({
@@ -16,46 +22,30 @@ export const plugin = new PanelPlugin<SimpleOptions>(SimplePanel)
     useCustomConfig: (builder) => {
       builder
         .addRadio({
-          path: 'gradientMode',
-          name: 'Gradient mode',
-          defaultValue: GraphGradientMode.Scheme,
+          path: 'sensitivityMode',
+          name: 'Sensitivity',
+          defaultValue: SensitivityMode.Low,
           settings: {
             options: [
               {
-                label: 'None',
-                value: GraphGradientMode.None,
-                ariaLabel: ariaLabels.gradientNone,
+                label: 'Low',
+                value: SensitivityMode.Low,
+                description: 'Enable low sensitivity',
+                ariaLabel: "Low sensitivity",
               },
               {
-                label: 'Opacity',
-                value: GraphGradientMode.Opacity,
-                description: 'Enable fill opacity gradient',
-                ariaLabel: ariaLabels.gradientOpacity,
+                label: 'Medium',
+                value: SensitivityMode.Medium,
+                description: 'Enable medium sensitivity',
+                ariaLabel: "Medium sensitivity",
               },
               {
-                label: 'Hue',
-                value: GraphGradientMode.Hue,
-                description: 'Small color hue gradient',
-                ariaLabel: ariaLabels.gradientHue,
-              },
-              {
-                label: 'Scheme',
-                value: GraphGradientMode.Scheme,
-                description: 'Use color scheme to define gradient',
-                ariaLabel: ariaLabels.gradientScheme,
+                label: 'High',
+                value: SensitivityMode.High,
+                description: 'Enable high sensitivity',
+                ariaLabel: "High sensitivity",
               },
             ],
-          },
-        })
-        .addSliderInput({
-          path: 'fillOpacity',
-          name: 'Fill opacity',
-          defaultValue: 25,
-          settings: {
-            min: 0,
-            max: 100,
-            step: 1,
-            ariaLabelForHandle: ariaLabels.fillOpacity,
           },
         });
     },
@@ -63,8 +53,8 @@ export const plugin = new PanelPlugin<SimpleOptions>(SimplePanel)
   .setPanelOptions((builder) => {
     return builder
       .addBooleanSwitch({
-        path: 'showSeriesCount',
-        name: 'Show series counter',
+        path: 'anomalyDetection',
+        name: 'Anomaly Detection',
         defaultValue: false,
       })
       .addRadio({

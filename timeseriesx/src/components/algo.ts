@@ -45,7 +45,8 @@ export const algo = {
 
     let anomalies = series.map((s: { fields: Array<{ values: string | any[]; }>; }) => ({ ...s, areAnomalies: areAnomalies(s.fields[1].values, Math.trunc(s.fields[1].values.length * (2 / 3)), anomaliesByZScore, sensitivity, 2) }));
 
-    console.log("#FilteredOut:" + anomalies.filter((a: { areAnomalies: any; }) => !a.areAnomalies).length);
+    console.log("# ZScore: FilteredOut: " + anomalies.filter((a: { areAnomalies: any; }) => !a.areAnomalies).length);
+    console.log("#anomalies: " + anomalies.map(a => a.areAnomalies));
     
     return anomalies.map(a => a.areAnomalies);
   },
@@ -54,7 +55,8 @@ export const algo = {
     let sliceIndex = Math.trunc(series[0].fields[1].values.length * (2 / 3));
     let anomalies = series.map((s) => ({ ...s, areAnomalies: seasonalityAlgo.checkIsAnomaly(s.fields[1].values.slice(0, sliceIndex), s.fields[1].values.slice(sliceIndex), sensitivity).is_anomaly }));
 
-    console.log("#FilteredOut:" + anomalies.filter((a: { areAnomalies: any; }) => !a.areAnomalies).length);
+    console.log("# SeasonalityAlgo FilteredOut: " + anomalies.filter((a: { areAnomalies: any; }) => !a.areAnomalies).length);
+    console.log("#anomalies: " + anomalies.map(a => a.areAnomalies));
     
     return anomalies.map(a => a.areAnomalies);
   },

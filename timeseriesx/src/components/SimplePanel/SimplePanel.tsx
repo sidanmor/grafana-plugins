@@ -21,10 +21,12 @@ export function SimplePanel({
   id,
 }: Props) {
   
-  let zScoreAnomalies = algo.ZScore(data.series, 3);
-  let seasonalityAnomalies = algo.seasonalityAlgo(data.series, 0);
+  if(options.anomalyDetection){
+    let zScoreAnomalies = algo.ZScore(data.series, options.sensitivityMode);
+    let seasonalityAnomalies = algo.seasonalityAlgo(data.series, options.sensitivityMode);
 
-  data.series = algo.filterSeries(data.series, zScoreAnomalies.map((a, i) => a || seasonalityAnomalies[i]));
+    data.series = algo.filterSeries(data.series, zScoreAnomalies.map((a, i) => a || seasonalityAnomalies[i]));
+  }
 
   if (data.series.length === 0) {
     return <PanelDataErrorView fieldConfig={fieldConfig} panelId={id} data={data} needsStringField />;
@@ -33,9 +35,7 @@ export function SimplePanel({
   return (
     <div data-testid={testIds.panel.container}>
       <div>
-        {options.showSeriesCount && (
-          <div data-testid="simple-panel-series-counter">Number of series: {data.series.length}</div>
-        )}
+        <div data-testid="simple-panel-series-counter">Anomaly Detection: {options.anomalyDetection ? "ON" : "OFF"}</div>
       </div>
       <TimeSeries
         width={width}

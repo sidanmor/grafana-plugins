@@ -1,9 +1,9 @@
 import { VizLegendOptions } from '@grafana/schema';
 
-type SeriesSize = 'sm' | 'md' | 'lg';
+type SeriesSize = 0 | 1 | 2;
 
 export interface SimpleOptions {
-  showSeriesCount: boolean;
-  seriesCountSize: SeriesSize;
+  anomalyDetection: boolean;
+  sensitivityMode: SeriesSize;
   legend: VizLegendOptions;
 }
