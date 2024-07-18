@@ -51,7 +51,7 @@ export const plugin = new PanelPlugin<SimpleOptions>(SimplePanel)
       .addRadio({
         path: 'sensitivityMode',
         name: 'Sensitivity',
-        defaultValue: SensitivityMode.Low,
+        defaultValue: SensitivityMode.High,
         settings: {
           options: [
             {
@@ -71,7 +71,7 @@ export const plugin = new PanelPlugin<SimpleOptions>(SimplePanel)
               value: SensitivityMode.High,
               description: 'Enable high sensitivity',
               ariaLabel: "High sensitivity",
-            },
+            }
           ],
         },
       })
