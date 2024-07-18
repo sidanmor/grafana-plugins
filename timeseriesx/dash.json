@@ -36,7 +36,7 @@
       "fieldConfig": {
         "defaults": {
           "color": {
-            "mode": "thresholds"
+            "mode": "palette-classic"
           },
           "mappings": [],
           "thresholds": {
@@ -1294,8 +1294,8 @@
   },
   "timepicker": {},
   "timezone": "",
-  "title": "timeseriesx Example Copy",
+  "title": "TimeSeriesx Example",
   "uid": "e521a641-49e8-42fa-b289-bc7f5c74f93c",
-  "version": 2,
+  "version": 3,
   "weekStart": ""
 }

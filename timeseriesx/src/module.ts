@@ -1,8 +1,9 @@
-import { PanelPlugin, FieldColorModeId } from '@grafana/data';
-import { LegendDisplayMode } from '@grafana/schema';
+import { PanelPlugin, FieldColorModeId, FieldConfigProperty, FieldType, identityOverrideProcessor } from '@grafana/data';
+import { LegendDisplayMode, LineStyle } from '@grafana/schema';
 import { SimpleOptions } from './types';
 import { SimplePanel } from './components';
 import { ariaLabels } from './components/ariaLabels';
+import { LineStyleEditor } from './components/LineStyleEditor';
 
 enum SensitivityMode {
   Low = 0,
@@ -10,15 +11,35 @@ enum SensitivityMode {
   High = 2
 }
 
+const categoryStyles = ['Graph styles'];
+
 export const plugin = new PanelPlugin<SimpleOptions>(SimplePanel)
   .useFieldConfig({
     standardOptions: {
-      color: {
+      [FieldConfigProperty.Color]: {
+        settings: {
+          byValueSupport: true,
+          bySeriesSupport: true,
+          preferThresholdsMode: false,
+        },
         defaultValue: {
-          mode: FieldColorModeId.ContinuousGrYlRd,
+          mode: FieldColorModeId.ContinuousPurples,
         },
       },
     },
+    useCustomConfig: (builder) => {
+      builder
+        .addCustomEditor<void, LineStyle>({
+          id: 'lineStyle',
+          path: 'lineStyle',
+          name: 'Line style',
+          category: categoryStyles,
+          editor: LineStyleEditor,
+          override: LineStyleEditor,
+          process: identityOverrideProcessor,
+          shouldApply: (field) => field.type === FieldType.number,
+        })
+    }
   })
   .setPanelOptions((builder) => {
     return builder
