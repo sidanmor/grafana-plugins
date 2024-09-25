@@ -10,14 +10,16 @@ export const algo = {
   ZScore: function(series: any[], sensitivity: number){
     
     function anomaliesByZScore(values: any[], start: any, sensitivity: number) {
+      let trainPart = values.slice(0, start);
+      let testPart = values.slice(start);
       const c = (sensitivity === Sensitivity.Low ? 4 : sensitivity === Sensitivity.Medium ? 3 : 2);
-      const sum = values.reduce((acc: any, value: any) => acc + value, 0);
-      const mean = sum / values.length;
-      const squaredDifferences = values.map((value: number) => Math.pow(value - mean, 2));
-      const variance = squaredDifferences.reduce((acc: any, value: any) => acc + value, 0) / values.length;
+      const sum = trainPart.reduce((acc: any, value: any) => acc + value, 0);
+      const mean = sum / trainPart.length;
+      const squaredDifferences = trainPart.map((value: number) => Math.pow(value - mean, 2));
+      const variance = squaredDifferences.reduce((acc: any, value: any) => acc + value, 0) / trainPart.length;
       const sigma = Math.sqrt(variance);
       const threshold = c * sigma;
-      const isAnomaly = values.map((value: number) => Math.abs(value - mean) > threshold);
+      const isAnomaly = testPart.map((value: number) => Math.abs(value - mean) > threshold);
       return isAnomaly;
     }
 
@@ -33,8 +35,8 @@ export const algo = {
 
     function areAnomalies(values: string | any[], startIndex: number, anomalyFunction: { (values: any, start: any, sensitivity: any): any; (arg0: any, arg1: number, arg2: any): any; }, sensitivity: number, consecutive: number) {
       values = values.slice(0, -1); // Remove the last point
-      let isAnomaly = anomalyFunction(values, 0, sensitivity);
-      for (let i = startIndex; i < isAnomaly.length - consecutive; i++) {
+      let isAnomaly = anomalyFunction(values, startIndex, sensitivity);
+      for (let i = 0; i < isAnomaly.length - consecutive; i++) {
         if (isAnomalyConsecutive(isAnomaly, i, consecutive)) {
           return true;
         }

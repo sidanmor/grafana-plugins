@@ -23,9 +23,9 @@ export function SimplePanel({
   
   if(options.anomalyDetection){
     let zScoreAnomalies = algo.ZScore(data.series, options.sensitivityMode);
-    let seasonalityAnomalies = algo.seasonalityAlgo(data.series, options.sensitivityMode);
+    // let seasonalityAnomalies = algo.seasonalityAlgo(data.series, options.sensitivityMode);
 
-    data.series = algo.filterSeries(data.series, zScoreAnomalies.map((a, i) => a || seasonalityAnomalies[i]));
+    data.series = algo.filterSeries(data.series, zScoreAnomalies.map((a, i) => a));
   }
 
   if (data.series.length === 0) {
